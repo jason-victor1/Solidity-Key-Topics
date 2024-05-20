@@ -57,7 +57,13 @@ Modifiers are used to change the behavior of functions. They can be used for:
 - Validating conditions before executing a function.
 
 ## Custom Modifiers
-Custom modifiers allow you to define reusable code that can be inserted into functions. 
+Custom modifiers allow you to define reusable code that can be inserted into functions. Example:
+```solidity
+modifier onlyOwner() {
+    require(msg.sender == owner, "Not owner");
+    _;
+}
+```
 
 ## Constructors
 Constructors are special functions that are executed once when the contract is deployed. They are used to initialize state variables.
@@ -88,13 +94,24 @@ Arrays are used to store sequential data. They can be:
 - **Dynamic**: Size can change.
 
 ## Mappings
-Mappings are key-value stores for storing associative arrays. 
+Mappings are key-value stores for storing associative arrays. Example:
+```solidity
+mapping(address => uint) public balances;
+```
 
 ## Structs
-Structs allow you to create custom data types by grouping variables. 
-
+Structs allow you to create custom data types by grouping variables. Example:
+```solidity
+struct Person {
+    string name;
+    uint age;
+}
+```
 ## Events
-Events are used to log information on the blockchain. They can be listened to by off-chain applications. 
+Events are used to log information on the blockchain. They can be listened to by off-chain applications. Example:
+```solidity
+event Transfer(address indexed from, address indexed to, uint256 value);
+```
 
 ## Ether
 Ether is the native cryptocurrency of Ethereum. Solidity allows contracts to handle ether:
@@ -110,8 +127,16 @@ Solidity uses `require`, `assert`, and `revert` to handle errors and exceptions:
 - **revert**: Explicitly revert the transaction.
 
 ## Inheritance
-Solidity supports inheritance, allowing contracts to inherit functions and state variables from parent contracts. 
+Solidity supports inheritance, allowing contracts to inherit functions and state variables from parent contracts. Example:
+```solidity
+contract A {
+    function foo() public {}
+}
 
+contract B is A {
+    function bar() public {}
+}
+```
 
 ## Calling Other Contracts
 Contracts can interact with other contracts by:
@@ -121,6 +146,10 @@ Contracts can interact with other contracts by:
 - Using interfaces.
 
 ## Interfaces
-Interfaces define the function signatures that a contract must implement. They do not contain any implementation. 
-
+Interfaces define the function signatures that a contract must implement. They do not contain any implementation. Example:
+```solidity
+interface MyInterface {
+    function myFunction() external;
+}
+```
 
