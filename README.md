@@ -27,11 +27,62 @@ This is an overview of key topics in Solidity programming. These notes have sect
 ## Contract Structure
 Solidity contracts are similar to classes in object-oriented programming. A contract can contain state variables, functions, function modifiers, events, and struct types.
 
+Example:
+```solidity
+pragma solidity ^0.8.0;
+
+contract ContractStructureSolid {
+    // State variables
+    uint256 public data;
+
+    // Function
+    function setData(uint256 _data) public {
+        data = _data;
+    }
+
+    // Function modifier
+    modifier onlyOwner() {
+        require(msg.sender == owner, "Not owner");
+        _;
+    }
+
+    // Event
+    event DataChanged(uint256 newData);
+
+    // Struct type
+    struct MyStruct {
+        uint256 value;
+        string name;
+    }
+}
+```
+
 ## Variables
 Variables in Solidity store data and come in several types:
 - **State variables**: Stored permanently on the blockchain.
 - **Local variables**: Exist only within function execution.
 - **Global variables**: Provide information about the blockchain and transaction context.
+
+Example:
+```solidity
+pragma solidity ^0.8.0;
+
+contract VariablesSolid {
+    // State variable
+    uint256 public stateVariable = 100;
+
+    // Global variables
+    address public owner = msg.sender;
+    uint256 public currentBlockNumber = block.number;
+
+    // Function with local variables
+    function calculate(uint256 a, uint256 b) public pure returns (uint256) {
+        // Local variable
+        uint256 result = a + b;
+        return result;
+    }
+}
+```
 
 ## Types
 Solidity supports various data types:
