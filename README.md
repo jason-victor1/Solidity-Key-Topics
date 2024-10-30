@@ -29,6 +29,7 @@ Solidity contracts are similar to classes in object-oriented programming. A cont
 
 Example:
 ```solidity
+// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
 contract ContractStructureSolid {
@@ -65,6 +66,7 @@ Variables in Solidity store data and come in several types:
 
 Example:
 ```solidity
+// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
 contract VariablesSolid {
@@ -88,6 +90,36 @@ contract VariablesSolid {
 Solidity supports various data types:
 - **Value types**: Includes `uint`, `int`, `bool`, `address`, and fixed-size `bytes`.
 - **Reference types**: Includes `string`, `array`, `struct`, and `mapping`.
+
+Example:
+```solidity
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract AllTypesExample {
+    // Value Types
+    uint public myUint = 123;
+    int public myInt = -123;
+    bool public myBool = true;
+    address public myAddress = 0x1234567890123456789012345678901234567890;
+    bytes32 public myBytes = "FixedSizeBytes";
+    
+    // Reference Types
+    string public myString = "Hello, Solidity!";
+    uint[] public myArray = [1, 2, 3, 4];
+    uint[3] public myFixedArray = [10, 20, 30];
+
+    struct Person {
+        string name;
+        uint age;
+    }
+
+    Person public person = Person("Alice", 30);
+
+    mapping(address => uint) public balances;
+
+}
+```
 
 ## Functions
 Functions are executable units of code. They can:
