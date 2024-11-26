@@ -127,6 +127,53 @@ Functions are executable units of code. They can:
 - Accept input parameters and return values.
 - Be declared with visibility specifiers like `public`, `private`, `internal`, and `external`.
 
+Example:
+```solidity
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract ExampleFunctions {
+    // State variable to store a number
+    uint256 private number;
+
+    // Constructor function to initialize the contract's state
+    constructor(uint256 _initialNumber) {
+        number = _initialNumber;
+    }
+
+    // Public function to set a new value for the number (modifies state)
+    function setNumber(uint256 _newNumber) public {
+        number = _newNumber;
+    }
+
+    // Public function to get the current number (reads state)
+    function getNumber() public view returns (uint256) {
+        return number;
+    }
+
+    // Internal function to double the current number (modifies state)
+    function doubleNumber() internal {
+        number *= 2;
+    }
+
+    // External function to multiply the number by a given multiplier (modifies state)
+    function multiplyNumber(uint256 multiplier) external {
+        number *= multiplier;
+    }
+
+    // Private function to add a specific value to the number (modifies state)
+    function addToNumber(uint256 value) private {
+        number += value;
+    }
+
+    // Public function to test private function (calls private function)
+    function testAddToNumber(uint256 value) public {
+        addToNumber(value);
+    }
+}
+```
+
+
 ## Visibility
 Visibility specifiers determine the accessibility of functions and state variables:
 - **public**: Accessible both internally and externally.
