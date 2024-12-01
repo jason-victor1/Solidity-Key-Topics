@@ -181,10 +181,93 @@ Visibility specifiers determine the accessibility of functions and state variabl
 - **internal**: Accessible within the contract and derived contracts.
 - **external**: Accessible only externally.
 
+Example:
+```solidity
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract VisibilityExample {
+    // State variables with different visibility
+    string public publicVariable = "Accessible both internally and externally";
+    string private privateVariable = "Accessible only within this contract";
+    string internal internalVariable = "Accessible within this and derived contracts";
+
+    // Public function
+    function getPublicVariable() public view returns (string memory) {
+        return publicVariable;
+    }
+
+    // Private function
+    function getPrivateVariable() private view returns (string memory) {
+        return privateVariable;
+    }
+
+    // Internal function
+    function getInternalVariable() internal view returns (string memory) {
+        return internalVariable;
+    }
+
+    // External function
+    function setPublicVariable(string memory newValue) external {
+        publicVariable = newValue;
+    }
+}
+
+// A derived contract showing internal access
+contract DerivedExample is VisibilityExample {
+    function getInternalFromDerived() public view returns (string memory) {
+        return getInternalVariable(); // Accessing internalVariable from parent contract
+    }
+}
+```
+
 ## Modifiers
 Modifiers are used to change the behavior of functions. They can be used for:
 - Restricting access.
 - Validating conditions before executing a function.
+
+Example:
+```solidity
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract ModifierExample {
+    address public owner;
+    bool public paused;
+
+    constructor() {
+        owner = msg.sender; // Setting the deployer as the owner
+        paused = false;
+    }
+
+    // Modifier to restrict access to the owner
+    modifier onlyOwner() {
+        require(msg.sender == owner, "Not the owner");
+        _;
+    }
+
+    // Modifier to check if the contract is not paused
+    modifier whenNotPaused() {
+        require(!paused, "Contract is paused");
+        _;
+    }
+
+    // Function to update owner (only callable by the current owner)
+    function changeOwner(address newOwner) public onlyOwner {
+        owner = newOwner;
+    }
+
+    // Function to toggle pause state (only callable by the owner)
+    function togglePause() public onlyOwner {
+        paused = !paused;
+    }
+
+    // Function to perform an action (only when not paused)
+    function performAction() public whenNotPaused {
+        // Function logic here
+    }
+}
+```
 
 ## Custom Modifiers
 Custom modifiers allow you to define reusable code that can be inserted into functions. Example:
