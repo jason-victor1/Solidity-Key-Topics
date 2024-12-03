@@ -335,14 +335,86 @@ Solidity supports various operators:
 - **Logical operators**: `&&`, `||`, `!`
 - **Bitwise operators**: `&`, `|`, `^`, `<<`, `>>`
 
+Example:
+```solidity
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract OperatorsExample {
+    function arithmeticOperators(uint a, uint b) public pure returns (uint, uint, uint, uint, uint) {
+        return (a + b, a - b, a * b, a / b, a % b);
+    }
+
+    function comparisonOperators(uint a, uint b) public pure returns (bool, bool, bool, bool, bool, bool) {
+        return (a == b, a != b, a < b, a > b, a <= b, a >= b);
+    }
+
+    function logicalOperators(bool x, bool y) public pure returns (bool, bool, bool) {
+        return (x && y, x || y, !x);
+    }
+
+    function bitwiseOperators(uint a, uint b) public pure returns (uint, uint, uint, uint, uint) {
+        return (a & b, a | b, a ^ b, a << 1, b >> 1);
+    }
+}
+```
+
 ## Conditionals
 Solidity uses typical control flow structures like `if`, `else`, and `else if` to make decisions.
+
+Example:
+```solidity
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract ConditionalsExample {
+    function checkNumber(uint x) public pure returns (string memory) {
+        if (x < 10) {
+            return "Less than 10";
+        } else if (x == 10) {
+            return "Exactly 10";
+        } else {
+            return "Greater than 10";
+        }
+    }
+}
+```
 
 ## Arrays
 Arrays are used to store sequential data. They can be:
 
 - **Static**: Fixed size.
 - **Dynamic**: Size can change.
+
+Example:
+```solidity
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract ArraysExample {
+    // Static array with fixed size
+    uint[5] public staticArray = [1, 2, 3, 4, 5];
+
+    // Dynamic array
+    uint[] public dynamicArray;
+
+    // Add an element to the dynamic array
+    function addElement(uint element) public {
+        dynamicArray.push(element);
+    }
+
+    // Get an element from the dynamic array
+    function getElement(uint index) public view returns (uint) {
+        require(index < dynamicArray.length, "Index out of bounds");
+        return dynamicArray[index];
+    }
+
+    // Get the length of the dynamic array
+    function getLength() public view returns (uint) {
+        return dynamicArray.length;
+    }
+}
+```
 
 ## Mappings
 Mappings are key-value stores for storing associative arrays. Example:
