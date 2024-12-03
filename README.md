@@ -281,6 +281,23 @@ modifier onlyOwner() {
 ## Constructors
 Constructors are special functions that are executed once when the contract is deployed. They are used to initialize state variables.
 
+Example:
+```solidity
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract ConstructorExample {
+    string public greeting;
+    address public owner;
+
+    // Constructor function to initialize variables
+    constructor(string memory _greeting) {
+        greeting = _greeting; // Initialize the greeting
+        owner = msg.sender;   // Set the deployer as the owner
+    }
+}
+```
+
 ## Global Variables
 Solidity provides global variables that give information about the blockchain:
 
@@ -288,6 +305,27 @@ Solidity provides global variables that give information about the blockchain:
 - `msg.value`: Amount of ether sent with a message.
 - `block.timestamp`: Current block timestamp.
 - `block.number`: Current block number.
+
+Example:
+```solidity
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract GlobalVariablesExample {
+    address public lastCaller;
+    uint public lastSentValue;
+    uint public lastBlockTimestamp;
+    uint public lastBlockNumber;
+
+    // Function to demonstrate global variables
+    function callMe() public payable {
+        lastCaller = msg.sender;         // Address of the caller
+        lastSentValue = msg.value;       // Ether sent with the call
+        lastBlockTimestamp = block.timestamp; // Timestamp of the current block
+        lastBlockNumber = block.number;  // Current block number
+    }
+}
+```
 
 ## Operators
 Solidity supports various operators:
