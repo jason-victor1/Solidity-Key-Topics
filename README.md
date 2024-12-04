@@ -442,6 +442,58 @@ Ether is the native cryptocurrency of Ethereum. Solidity allows contracts to han
 - **Sending ether**: Using functions like `transfer`, `send`, or `call`.
 - **Receiving ether**: By marking functions as `payable`.
 
+Example:
+```solidity
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract EtherExample {
+    // Event to log received ether
+    event EtherReceived(address sender, uint256 amount);
+
+    // Event to log sent ether
+    event EtherSent(address recipient, uint256 amount);
+
+    // Function to receive ether - must be marked as payable
+    receive() external payable {
+        emit EtherReceived(msg.sender, msg.value);
+    }
+
+    // Fallback function to handle calls with no data but ether
+    fallback() external payable {
+        emit EtherReceived(msg.sender, msg.value);
+    }
+
+    // Function to send ether using transfer
+    function sendEtherViaTransfer(address payable recipient) external payable {
+        require(msg.value > 0, "Must send some ether");
+        recipient.transfer(msg.value);
+        emit EtherSent(recipient, msg.value);
+    }
+
+    // Function to send ether using send
+    function sendEtherViaSend(address payable recipient) external payable {
+        require(msg.value > 0, "Must send some ether");
+        bool success = recipient.send(msg.value);
+        require(success, "Send failed");
+        emit EtherSent(recipient, msg.value);
+    }
+
+    // Function to send ether using call
+    function sendEtherViaCall(address payable recipient) external payable {
+        require(msg.value > 0, "Must send some ether");
+        (bool success, ) = recipient.call{value: msg.value}("");
+        require(success, "Call failed");
+        emit EtherSent(recipient, msg.value);
+    }
+
+    // Function to check the contract's balance
+    function getContractBalance() external view returns (uint256) {
+        return address(this).balance;
+    }
+}
+```
+
 ## Errors
 Solidity uses `require`, `assert`, and `revert` to handle errors and exceptions:
 
