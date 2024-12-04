@@ -501,6 +501,32 @@ Solidity uses `require`, `assert`, and `revert` to handle errors and exceptions:
 - **assert**: Used for internal errors and conditions that should never be false.
 - **revert**: Explicitly revert the transaction.
 
+Example:
+```solidity
+pragma solidity ^0.8.0;
+
+contract ErrorHandlingExample {
+    uint public balance;
+
+    function deposit(uint amount) public {
+        require(amount > 0, "Deposit amount must be greater than zero");
+        balance += amount;
+    }
+
+    function withdraw(uint amount) public {
+        require(amount <= balance, "Insufficient funds");
+        balance -= amount;
+        assert(balance >= 0); // Ensures the balance invariant
+    }
+
+    function specialFunction(uint value) public pure {
+        if (value < 100) {
+            revert("Value must be at least 100");
+        }
+    }
+}
+```
+
 ## Inheritance
 Solidity supports inheritance, allowing contracts to inherit functions and state variables from parent contracts. Example:
 ```solidity
