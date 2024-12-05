@@ -546,6 +546,52 @@ Contracts can interact with other contracts by:
 - Using low-level calls.
 - Using interfaces.
 
+Example:
+```solidity
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+// Called Contract
+contract Callee {
+    uint public value;
+
+    function setValue(uint _value) external {
+        value = _value;
+    }
+
+    function getValue() external view returns (uint) {
+        return value;
+    }
+}
+
+// Caller Contract
+contract Caller {
+    // Example 1: Instantiating the contract
+    function callSetValueDirectly(address calleeAddress, uint _value) public {
+        Callee callee = Callee(calleeAddress); // Instantiate the Callee contract
+        callee.setValue(_value); // Call setValue on the instantiated contract
+    }
+
+    // Example 2: Using low-level calls
+    function callSetValueLowLevel(address calleeAddress, uint _value) public {
+        bytes memory data = abi.encodeWithSignature("setValue(uint256)", _value); // ABI encoding of function and argument
+        (bool success, ) = calleeAddress.call(data); // Low-level call
+        require(success, "Low-level call failed");
+    }
+
+    // Example 3: Using interfaces
+    function callSetValueUsingInterface(ICallee calleeContract, uint _value) public {
+        calleeContract.setValue(_value); // Call setValue via the interface
+    }
+}
+
+// Interface for the Callee Contract
+interface ICallee {
+    function setValue(uint _value) external;
+    function getValue() external view returns (uint);
+}
+```
+
 ## Interfaces
 Interfaces define the function signatures that a contract must implement. They do not contain any implementation. Example:
 ```solidity
